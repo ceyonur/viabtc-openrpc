@@ -2639,7 +2639,7 @@
       "UserBalance": {
         "type": "object",
         "patternProperties": {
-          "*.": {
+          ".*": {
             "type": "object",
             "properties": {
               "available": {
