@@ -1,0 +1,2936 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "version": "1.0.0",
+    "title": "ViaBTC API",
+    "description": "Overview of ViaBTC Exchange Server API",
+    "contact": {
+      "name": "Ceyhun Onur",
+      "url": "https://github.com/ceyonur/viabtc-openrpc/"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:18080"
+    }
+  ],
+  "methods": [
+    {
+      "name": "asset.list",
+      "description": "Returns all available assets in a list.",
+      "params": [],
+      "result": {
+        "name": "assetList",
+        "description": "asset list response",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/AssetResponse"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "assetListExample",
+          "description": "Asset list example",
+          "params": [],
+          "result": {
+            "name": "assetListExampleResult",
+            "value": [
+              {
+                "name": "TRY",
+                "prec": 8
+              },
+              {
+                "name": "USD",
+                "prec": 8
+              },
+              {
+                "name": "BTC",
+                "prec": 8
+              },
+              {
+                "name": "ETH",
+                "prec": 8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "asset.summary",
+      "description": "Returns all available assets with their market summary in a list.",
+      "params": [
+        {
+          "name": "asset",
+          "description": "Asset to be summarized",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "assetSummaryList",
+        "description": "asset summary response",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/AssetSummary"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "assetSummaryExample",
+          "description": "Asset summary example",
+          "params": [],
+          "result": {
+            "name": "assetSummaryExampleResult",
+            "value": [
+              {
+                "name": "TRY",
+                "available_count": 0,
+                "total_balance": "0",
+                "freeze_count": 0,
+                "available_balance": "0",
+                "freeze_balance": "0"
+              },
+              {
+                "name": "USD",
+                "available_count": 0,
+                "total_balance": "0",
+                "freeze_count": 0,
+                "available_balance": "0",
+                "freeze_balance": "0"
+              },
+              {
+                "name": "BTC",
+                "available_count": 3,
+                "total_balance": "9",
+                "freeze_count": 1,
+                "available_balance": "8",
+                "freeze_balance": "1"
+              },
+              {
+                "name": "ETH",
+                "available_count": 0,
+                "total_balance": "0",
+                "freeze_count": 0,
+                "available_balance": "0",
+                "freeze_balance": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "assetSummaryParamExample",
+          "description": "Asset summary example with param",
+          "params": [
+            {
+              "name": "asset1",
+              "value": "TRY"
+            },
+            {
+              "name": "asset2",
+              "value": "USD"
+            }
+          ],
+          "result": {
+            "name": "assetSummaryExampleResult",
+            "value": [
+              {
+                "name": "TRY",
+                "available_count": 0,
+                "total_balance": "0",
+                "freeze_count": 0,
+                "available_balance": "0",
+                "freeze_balance": "0"
+              },
+              {
+                "name": "USD",
+                "available_count": 0,
+                "total_balance": "0",
+                "freeze_count": 0,
+                "available_balance": "0",
+                "freeze_balance": "0"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "market.list",
+      "description": "Returns all available markets in a list.",
+      "params": [],
+      "result": {
+        "name": "marketList",
+        "description": "market list response",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Market"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "marketListExample",
+          "description": "Market list example",
+          "params": [],
+          "result": {
+            "name": "marketListExampleResult",
+            "value": [
+              {
+                "name": "ETHBTC",
+                "money_prec": 8,
+                "stock": "ETH",
+                "money": "BTC",
+                "fee_prec": 4,
+                "stock_prec": 8,
+                "min_amount": "0.001"
+              },
+              {
+                "name": "BTCTRY",
+                "money_prec": 8,
+                "stock": "BTC",
+                "money": "TRY",
+                "fee_prec": 4,
+                "stock_prec": 8,
+                "min_amount": "0.001"
+              },
+              {
+                "name": "BTCUSD",
+                "money_prec": 8,
+                "stock": "BTC",
+                "money": "USD",
+                "fee_prec": 4,
+                "stock_prec": 8,
+                "min_amount": "0.001"
+              },
+              {
+                "name": "ETHUSD",
+                "money_prec": 8,
+                "stock": "ETH",
+                "money": "USD",
+                "fee_prec": 4,
+                "stock_prec": 8,
+                "min_amount": "0.001"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "market.summary",
+      "description": "Returns all market summaries in a list.",
+      "params": [
+        {
+          "name": "market",
+          "description": "Market to be summarized",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "marketSummaryList",
+        "description": "market summary response",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/MarketSummary"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "marketSummaryExample",
+          "description": "Market summary example",
+          "params": [],
+          "result": {
+            "name": "marketSummaryExampleResult",
+            "value": [
+              {
+                "bid_amount": "0",
+                "name": "ETHBTC",
+                "ask_count": 0,
+                "bid_count": 0,
+                "ask_amount": "0"
+              },
+              {
+                "bid_amount": "0",
+                "name": "BTCTRY",
+                "ask_count": 0,
+                "bid_count": 0,
+                "ask_amount": "0"
+              },
+              {
+                "bid_amount": "0",
+                "name": "BTCUSD",
+                "ask_count": 1,
+                "bid_count": 0,
+                "ask_amount": "1"
+              },
+              {
+                "bid_amount": "0",
+                "name": "ETHUSD",
+                "ask_count": 0,
+                "bid_count": 0,
+                "ask_amount": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "marketSummaryParamExample",
+          "description": "Market summary example with param",
+          "params": [
+            {
+              "name": "market1",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "market2",
+              "value": "BTCTRY"
+            }
+          ],
+          "result": {
+            "name": "marketSummaryExampleResult",
+            "value": [
+              {
+                "bid_amount": "0",
+                "name": "BTCUSD",
+                "ask_count": 1,
+                "bid_count": 0,
+                "ask_amount": "1"
+              },
+              {
+                "bid_amount": "0",
+                "name": "BTCTRY",
+                "ask_count": 0,
+                "bid_count": 0,
+                "ask_amount": "0"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "balance.query",
+      "description": "Returns all balances of the user.",
+      "params": [
+        {
+          "name": "userId",
+          "description": "User ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "asset",
+          "description": "Asset to be returned",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "userBalanceList",
+        "description": "balance query response",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/UserBalance"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "balanceQueryExample",
+          "description": "Balance query example",
+          "params": [
+            {
+              "name": "userId",
+              "value": [
+                1
+              ]
+            }
+          ],
+          "result": {
+            "name": "balanceQueryExampleResult",
+            "value": [
+              {
+                "TRY": {
+                  "available": "0",
+                  "freeze": "0"
+                },
+                "USD": {
+                  "available": "0",
+                  "freeze": "0"
+                },
+                "BTC": {
+                  "available": "5",
+                  "freeze": "1"
+                },
+                "ETH": {
+                  "available": "0",
+                  "freeze": "0"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "balanceQueryParamExample",
+          "description": "Balance query example with asset param",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "asset",
+              "value": "BTC"
+            }
+          ],
+          "result": {
+            "name": "balanceQueryExampleResult",
+            "value": [
+              {
+                "BTC": {
+                  "available": "5",
+                  "freeze": "1"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "balance.update",
+      "description": "Updates the asset balance of the user.",
+      "params": [
+        {
+          "name": "userId",
+          "description": "User ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "asset",
+          "description": "Asset name whose balance will be updated.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "business",
+          "description": "Business Type",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "businessId",
+          "description": "It will only succeed once with multiple operations of the same userId, asset, business or businessId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "change",
+          "description": "balance change negative numbers for deduction.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "detail",
+          "description": "attached information",
+          "required": false,
+          "schema": {
+            "type": "object"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        },
+        {
+          "code": 10,
+          "message": "repeat update"
+        },
+        {
+          "code": 11,
+          "message": "balance not enough"
+        }
+      ],
+      "result": {
+        "name": "balanceUpdateResponse",
+        "description": "balance update success response",
+        "schema": {
+          "pattern": "success",
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "success"
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "balanceUpdateExample",
+          "description": "Balance update example",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "asset",
+              "value": "BTC"
+            },
+            {
+              "name": "business",
+              "value": "deposit"
+            },
+            {
+              "name": "businessId",
+              "value": "1"
+            },
+            {
+              "name": "change",
+              "value": "1"
+            }
+          ],
+          "result": {
+            "name": "balanceUpdateSuccessResult",
+            "value": {
+              "status": "success"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "balance.history",
+      "description": "Returns balance update history of the user.",
+      "params": [
+        {
+          "name": "userId",
+          "description": "User ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "asset",
+          "description": "Optional asset name.",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "business",
+          "description": "Business Type to be filtered with.",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "startTime",
+          "description": "start time，0 for unlimited",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "endTime",
+          "description": "end time，0 for unlimited",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "offset",
+          "description": "offset position",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "limit",
+          "description": "count limit",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "balanceHistoryResponse",
+        "description": "balance history response",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "offset": {
+              "type": "integer"
+            },
+            "limit": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "records": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BalanceHistory"
+              }
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "balanceHistoryExample",
+          "description": "Balance history example",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "asset",
+              "value": "BTC"
+            },
+            {
+              "name": "business",
+              "value": ""
+            },
+            {
+              "name": "startTime",
+              "value": 0
+            },
+            {
+              "name": "endTime",
+              "value": 0
+            },
+            {
+              "name": "offset",
+              "value": 0
+            },
+            {
+              "name": "limit",
+              "value": 50
+            }
+          ],
+          "result": {
+            "name": "balanceHistoryExampleResult",
+            "value": [
+              {
+                "asset": "BTC",
+                "time": 1602505357.413194,
+                "business": "withdraw",
+                "change": "-1",
+                "detail": {
+                  "id": 1
+                },
+                "balance": "3"
+              },
+              {
+                "asset": "BTC",
+                "time": 1602503451.129381,
+                "business": "deposit",
+                "change": "3",
+                "detail": {
+                  "id": 2
+                },
+                "balance": "4"
+              },
+              {
+                "asset": "BTC",
+                "time": 1602503366.167487,
+                "business": "deposit",
+                "change": "1",
+                "detail": {
+                  "id": 1
+                },
+                "balance": "1"
+              }
+            ]
+          }
+        },
+        {
+          "name": "balanceHistoryBusinessExample",
+          "description": "Balance history example with business param",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "asset",
+              "value": "BTC"
+            },
+            {
+              "name": "business",
+              "value": "deposit"
+            },
+            {
+              "name": "startTime",
+              "value": 0
+            },
+            {
+              "name": "endTime",
+              "value": 0
+            },
+            {
+              "name": "offset",
+              "value": 0
+            },
+            {
+              "name": "limit",
+              "value": 50
+            }
+          ],
+          "result": {
+            "name": "balanceHistoryBusinessExampleResult",
+            "value": [
+              {
+                "asset": "BTC",
+                "time": 1602503451.129381,
+                "business": "deposit",
+                "change": "3",
+                "detail": {
+                  "id": 2
+                },
+                "balance": "4"
+              },
+              {
+                "asset": "BTC",
+                "time": 1602503366.167487,
+                "business": "deposit",
+                "change": "1",
+                "detail": {
+                  "id": 1
+                },
+                "balance": "1"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.put_limit",
+      "description": "Places limit order on the market.",
+      "params": [
+        {
+          "name": "userId",
+          "description": "User ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "market",
+          "description": "Market name that will be used.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "side",
+          "description": "Indicates if bid or ask operation is selected",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/Side"
+          }
+        },
+        {
+          "name": "amount",
+          "description": "Amount",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "price",
+          "description": "Price",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "taker_fee_rate",
+          "description": "Taker Fee Rate",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "maker_fee_rate",
+          "description": "Maker Fee Rate",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "source",
+          "description": "Source",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 30
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        },
+        {
+          "code": 10,
+          "message": "balance not enough"
+        }
+      ],
+      "result": {
+        "name": "limitOrderResult",
+        "description": "limit order success response",
+        "schema": {
+          "$ref": "#/components/schemas/OrderDetails"
+        }
+      },
+      "examples": [
+        {
+          "name": "limitOrderBidExampleResult",
+          "description": "An incomplete bid limit order example",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "side",
+              "value": 2
+            },
+            {
+              "name": "amount",
+              "value": "1"
+            },
+            {
+              "name": "price",
+              "value": "8000"
+            },
+            {
+              "name": "taker_fee_rate",
+              "value": "0.002"
+            },
+            {
+              "name": "maker_fee_rate",
+              "value": "0.001"
+            }
+          ],
+          "result": {
+            "name": "limitOrderBidExample",
+            "value": {
+              "id": 12,
+              "side": 2,
+              "deal_money": "0",
+              "source": "",
+              "price": "8000",
+              "market": "BTCUSD",
+              "ctime": 1602599518.243492,
+              "type": 1,
+              "user": 1,
+              "mtime": 1602599518.243492,
+              "maker_fee": "0.001",
+              "amount": "1",
+              "left": "1",
+              "taker_fee": "0.002",
+              "deal_fee": "0",
+              "deal_stock": "0"
+            }
+          }
+        },
+        {
+          "name": "limitOrderCompletedAskExampleResult",
+          "description": "A completed ask limit order example",
+          "params": [
+            {
+              "name": "userId",
+              "value": 2
+            },
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "side",
+              "value": 1
+            },
+            {
+              "name": "amount",
+              "value": "1"
+            },
+            {
+              "name": "price",
+              "value": "5000"
+            },
+            {
+              "name": "taker_fee_rate",
+              "value": "0.002"
+            },
+            {
+              "name": "maker_fee_rate",
+              "value": "0.001"
+            }
+          ],
+          "result": {
+            "name": "limitOrderCompletedAskExampleResult",
+            "value": {
+              "id": 9,
+              "side": 1,
+              "deal_money": "9999",
+              "source": "",
+              "price": "5000",
+              "market": "BTCUSD",
+              "ctime": 1602597456.622023,
+              "type": 1,
+              "user": 2,
+              "mtime": 1602597456.622037,
+              "maker_fee": "0.001",
+              "amount": "1",
+              "left": "0e-8",
+              "taker_fee": "0.002",
+              "deal_fee": "19.998",
+              "deal_stock": "1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.put_market",
+      "description": "Places market order on the market.",
+      "params": [
+        {
+          "name": "userId",
+          "description": "User ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "market",
+          "description": "Market name that will be used.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "side",
+          "description": "Indicates if bid or ask operation is selected",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/Side"
+          }
+        },
+        {
+          "name": "amount",
+          "description": "Amount",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "taker_fee_rate",
+          "description": "Taker Fee Rate",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "source",
+          "description": "Source",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 30
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        },
+        {
+          "code": 10,
+          "message": "balance not enough"
+        }
+      ],
+      "result": {
+        "name": "marketOrderResult",
+        "description": "market order success response",
+        "schema": {
+          "$ref": "#/components/schemas/OrderDetails"
+        }
+      },
+      "examples": [
+        {
+          "name": "marketOrderBidExample",
+          "description": "An incomplete bid limit order example",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "side",
+              "value": 2
+            },
+            {
+              "name": "amount",
+              "value": "1000"
+            },
+            {
+              "name": "taker_fee_rate",
+              "value": "0.002"
+            }
+          ],
+          "result": {
+            "name": "marketOrderBidExampleResult",
+            "value": {
+              "id": 18,
+              "side": 2,
+              "deal_money": "1000",
+              "source": "",
+              "price": "0",
+              "market": "BTCUSD",
+              "ctime": 1602602541.357022,
+              "type": 2,
+              "user": 1,
+              "mtime": 1602602541.35704,
+              "maker_fee": "0",
+              "amount": "1000",
+              "left": "0e-16",
+              "taker_fee": "0.002",
+              "deal_fee": "0.00025",
+              "deal_stock": "0.125"
+            }
+          }
+        },
+        {
+          "name": "marketOrderAskExample",
+          "description": "An ask market order example",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "side",
+              "value": 1
+            },
+            {
+              "name": "amount",
+              "value": "1"
+            },
+            {
+              "name": "taker_fee_rate",
+              "value": "0.002"
+            }
+          ],
+          "result": {
+            "name": "marketOrderBidExampleResult",
+            "value": {
+              "id": 13,
+              "side": 1,
+              "deal_money": "8000",
+              "source": "",
+              "price": "0",
+              "market": "BTCUSD",
+              "ctime": 1602602340.138814,
+              "type": 2,
+              "user": 1,
+              "mtime": 1602602340.138828,
+              "maker_fee": "0",
+              "amount": "1",
+              "left": "0e-8",
+              "taker_fee": "0.002",
+              "deal_fee": "16",
+              "deal_stock": "1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.cancel",
+      "description": "Cancels an uncompleted order.",
+      "params": [
+        {
+          "name": "userId",
+          "description": "User ID that owns the order.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "market",
+          "description": "Market name that will be used.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "orderId",
+          "description": "Order ID which will be cancelled.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        },
+        {
+          "code": 10,
+          "message": "order not found"
+        },
+        {
+          "code": 11,
+          "message": "user not match"
+        }
+      ],
+      "result": {
+        "name": "cancelOrderResult",
+        "description": "cancelled order details",
+        "schema": {
+          "$ref": "#/components/schemas/OrderDetails"
+        }
+      },
+      "examples": [
+        {
+          "name": "cancelOrderExample",
+          "description": "cancel order example",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "orderId",
+              "value": 17
+            }
+          ],
+          "result": {
+            "name": "cancelOrderExampleResult",
+            "value": {
+              "id": 17,
+              "side": 1,
+              "deal_money": "3000",
+              "source": "",
+              "price": "8000",
+              "market": "BTCUSD",
+              "ctime": 1602602518.563992,
+              "type": 1,
+              "user": 1,
+              "mtime": 1602602847.827795,
+              "maker_fee": "0.001",
+              "amount": "1",
+              "left": "0.625",
+              "taker_fee": "0.002",
+              "deal_fee": "3",
+              "deal_stock": "0.375"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.deals",
+      "description": "Shows order deals(transactions).",
+      "params": [
+        {
+          "name": "orderId",
+          "description": "Order ID to lookup for deals.",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "orderDealsResult",
+        "description": "order deal details",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DealDetails"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "orderDealsExample",
+          "description": "order deals example",
+          "params": [
+            {
+              "name": "orderId",
+              "value": 3
+            },
+            {
+              "name": "offset",
+              "value": 0
+            },
+            {
+              "name": "limit",
+              "value": 10
+            }
+          ],
+          "result": {
+            "name": "orderDealsExampleResult",
+            "value": {
+              "limit": 10,
+              "offset": 0,
+              "records": [
+                {
+                  "role": 1,
+                  "time": 1602591296.663264,
+                  "id": 3,
+                  "user": 2,
+                  "price": "1000",
+                  "amount": "0.5",
+                  "deal": "500",
+                  "deal_order_id": 6,
+                  "fee": "0.0005"
+                },
+                {
+                  "role": 1,
+                  "time": 1602591255.997116,
+                  "id": 2,
+                  "user": 2,
+                  "price": "1000",
+                  "amount": "0.5",
+                  "deal": "500",
+                  "deal_order_id": 5,
+                  "fee": "0.0005"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.book",
+      "description": "Shows current order book.",
+      "params": [
+        {
+          "name": "market",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "side",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/Side"
+          }
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "orderBookResult",
+        "description": "order book details",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "offset": {
+              "type": "integer"
+            },
+            "limit": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "total": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "orders": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/OrderDetails"
+              }
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "orderBookExample",
+          "description": "order book example",
+          "params": [
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "side",
+              "value": 2
+            },
+            {
+              "name": "offset",
+              "value": 10
+            },
+            {
+              "name": "limit",
+              "value": 2
+            }
+          ],
+          "result": {
+            "name": "orderBookExampleResult",
+            "value": {
+              "offset": 0,
+              "total": 32,
+              "limit": 2,
+              "orders": [
+                {
+                  "id": 23,
+                  "side": 2,
+                  "deal_money": "2320",
+                  "source": "",
+                  "price": "8000",
+                  "market": "BTCUSD",
+                  "ctime": 1602608294.283897,
+                  "type": 1,
+                  "user": 1,
+                  "mtime": 1602632410.913296,
+                  "maker_fee": "0.001",
+                  "amount": "1",
+                  "left": "0.71",
+                  "taker_fee": "0.002",
+                  "deal_fee": "0.00029",
+                  "deal_stock": "0.29"
+                },
+                {
+                  "id": 24,
+                  "side": 2,
+                  "deal_money": "0",
+                  "source": "",
+                  "price": "8000",
+                  "market": "BTCUSD",
+                  "ctime": 1602608294.428008,
+                  "type": 1,
+                  "user": 1,
+                  "mtime": 1602608294.428008,
+                  "maker_fee": "0.001",
+                  "amount": "1",
+                  "left": "1",
+                  "taker_fee": "0.002",
+                  "deal_fee": "0",
+                  "deal_stock": "0"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.depth",
+      "description": "Shows current available orders depth (price-amount pairs)",
+      "params": [
+        {
+          "name": "market",
+          "description": "Market name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "interval",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "description": "e.g. '1' for 1 unit interval, '0' for no interval. Prices can be floored/ceiled with interval."
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "orderDepthResult",
+        "description": "ask and bid orders depth",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "asks": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": [
+                {
+                  "description": "price",
+                  "type": "string"
+                },
+                {
+                  "description": "amount",
+                  "type": "string"
+                }
+              ]
+            },
+            "bids": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": [
+                {
+                  "description": "price",
+                  "type": "string"
+                },
+                {
+                  "description": "amount",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "orderDepthExample",
+          "description": "Available orders depth example, no interval.",
+          "params": [
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "limit",
+              "value": 50
+            },
+            {
+              "name": "interval",
+              "value": "0"
+            }
+          ],
+          "result": {
+            "name": "orderDepthExampleResult",
+            "value": {
+              "asks": [
+                [
+                  "10000",
+                  "2.1"
+                ],
+                [
+                  "80000",
+                  "0.1"
+                ]
+              ],
+              "bids": [
+                [
+                  "8000",
+                  "12.71"
+                ],
+                [
+                  "5",
+                  "1.8"
+                ],
+                [
+                  "1",
+                  "0.1"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "name": "orderDepthIntervalExample",
+          "description": "Available orders depth example, with interval.",
+          "params": [
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "limit",
+              "value": 50
+            },
+            {
+              "name": "interval",
+              "value": "10"
+            }
+          ],
+          "result": {
+            "name": "orderDepthIntervalExampleResult",
+            "value": {
+              "asks": [
+                [
+                  "10000",
+                  "2.1"
+                ],
+                [
+                  "80000",
+                  "0.1"
+                ]
+              ],
+              "bids": [
+                [
+                  "8000",
+                  "12.71"
+                ],
+                [
+                  "0e-8",
+                  "1.9"
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.pending",
+      "description": "Shows current pending orders of the user.",
+      "params": [
+        {
+          "name": "userId",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "market",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "pendingOrderResult",
+        "description": "pending orders of user",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "offset": {
+              "type": "integer"
+            },
+            "limit": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "total": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "records": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/OrderDetails"
+              }
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "pendingOrdersExample",
+          "description": "pending orders example",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "offset",
+              "value": 0
+            },
+            {
+              "name": "limit",
+              "value": 2
+            }
+          ],
+          "result": {
+            "name": "pendingOrdersExampleResult",
+            "value": {
+              "total": 36,
+              "limit": 2,
+              "records": [
+                {
+                  "id": 170,
+                  "side": 2,
+                  "deal_money": "0",
+                  "source": "",
+                  "price": "1",
+                  "market": "BTCUSD",
+                  "ctime": 1602632444.322568,
+                  "type": 1,
+                  "user": 1,
+                  "mtime": 1602632444.322568,
+                  "maker_fee": "0.001",
+                  "amount": "0.1",
+                  "left": "0.1",
+                  "taker_fee": "0.002",
+                  "deal_fee": "0",
+                  "deal_stock": "0"
+                },
+                {
+                  "id": 60,
+                  "side": 2,
+                  "deal_money": "0",
+                  "source": "",
+                  "price": "5",
+                  "market": "BTCUSD",
+                  "ctime": 1602632363.182957,
+                  "type": 1,
+                  "user": 1,
+                  "mtime": 1602632363.182957,
+                  "maker_fee": "0.001",
+                  "amount": "0.1",
+                  "left": "0.1",
+                  "taker_fee": "0.002",
+                  "deal_fee": "0",
+                  "deal_stock": "0"
+                }
+              ],
+              "offset": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.pending_detail",
+      "description": "Shows pending order details.",
+      "params": [
+        {
+          "name": "market",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "orderId",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "pendingOrderDetailsResult",
+        "description": "pending order details",
+        "schema": {
+          "$ref": "#/components/schemas/OrderDetails"
+        }
+      },
+      "examples": [
+        {
+          "name": "pendingOrderDetailsExample",
+          "description": "pending order details example",
+          "params": [
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "orderId",
+              "value": 170
+            }
+          ],
+          "result": {
+            "name": "pendingOrderDetailsExampleResult",
+            "value": {
+              "id": 170,
+              "side": 2,
+              "deal_money": "0",
+              "source": "",
+              "price": "1",
+              "market": "BTCUSD",
+              "ctime": 1602632444.322568,
+              "type": 1,
+              "user": 1,
+              "mtime": 1602632444.322568,
+              "maker_fee": "0.001",
+              "amount": "0.1",
+              "left": "0.1",
+              "taker_fee": "0.002",
+              "deal_fee": "0",
+              "deal_stock": "0"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.finished",
+      "description": "Shows finished(completed) orders of the user.",
+      "params": [
+        {
+          "name": "userId",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "market",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "startTime",
+          "required": false,
+          "description": "start time filter，0 for unlimited",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "endTime",
+          "required": false,
+          "description": "end time filter，0 for unlimited",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "side",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/Side"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "finishedOrderResult",
+        "description": "finished orders of user",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "offset": {
+              "type": "integer"
+            },
+            "limit": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "records": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/FinishedOrderDetails"
+              }
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "finishedOrdersExample",
+          "description": "finished orders example",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "startTime",
+              "value": 0
+            },
+            {
+              "name": "endTime",
+              "value": 0
+            },
+            {
+              "name": "limit",
+              "value": 2
+            },
+            {
+              "name": "side",
+              "value": 1
+            }
+          ],
+          "result": {
+            "name": "pendingOrdersExampleResult",
+            "value": {
+              "limit": 2,
+              "offset": 0,
+              "records": [
+                {
+                  "deal_money": "80",
+                  "user": 1,
+                  "id": 169,
+                  "ctime": 1602632410.913278,
+                  "side": 1,
+                  "deal_fee": "0.16",
+                  "ftime": 1602632410.913296,
+                  "market": "BTCUSD",
+                  "source": "",
+                  "type": 1,
+                  "price": "5",
+                  "amount": "0.01",
+                  "taker_fee": "0.002",
+                  "maker_fee": "0.001",
+                  "deal_stock": "0.01"
+                },
+                {
+                  "deal_money": "80",
+                  "user": 1,
+                  "id": 168,
+                  "ctime": 1602632410.7529,
+                  "side": 1,
+                  "deal_fee": "0.16",
+                  "ftime": 1602632410.752914,
+                  "market": "BTCUSD",
+                  "source": "",
+                  "type": 1,
+                  "price": "5",
+                  "amount": "0.01",
+                  "taker_fee": "0.002",
+                  "maker_fee": "0.001",
+                  "deal_stock": "0.01"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order.finished_detail",
+      "description": "Shows finished order details.",
+      "params": [
+        {
+          "name": "orderId",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "finishedOrderDetailsResult",
+        "description": "finished order details",
+        "schema": {
+          "$ref": "#/components/schemas/FinishedOrderDetails"
+        }
+      },
+      "examples": [
+        {
+          "name": "finishedOrderDetailsExample",
+          "description": "finished order details example",
+          "params": [
+            {
+              "name": "orderId",
+              "value": 1
+            }
+          ],
+          "result": {
+            "name": "pendingOrderDetailsExampleResult",
+            "value": {
+              "deal_money": "8000",
+              "user": 1,
+              "id": 1,
+              "ctime": 1602522784.694972,
+              "side": 1,
+              "deal_fee": "8",
+              "ftime": 1602523038.011407,
+              "market": "BTCUSD",
+              "source": "",
+              "type": 1,
+              "price": "8000",
+              "amount": "1",
+              "taker_fee": "0.002",
+              "maker_fee": "0.001",
+              "deal_stock": "1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "market.last",
+      "description": "Returns last price of the market.",
+      "params": [
+        {
+          "name": "market",
+          "description": "Market name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "lastMarketPrice",
+        "description": "last market price",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "marketPriceExample",
+          "description": "Last market price example",
+          "params": [
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            }
+          ],
+          "result": {
+            "name": "marketPriceExampleResult",
+            "value": "8000.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "market.deals",
+      "description": "Returns market deal history (transactions).",
+      "params": [
+        {
+          "name": "market",
+          "description": "Market name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "maximum": 10000
+          }
+        },
+        {
+          "name": "lastId",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "last minimum Deal ID that request will show. List will contain deals only with dealId bigger than this parameter (lastId)"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "marketDealHistory",
+        "description": "market deals history",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "price": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer",
+              "description": "Deal ID"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "sell",
+                "buy"
+              ]
+            },
+            "amount": {
+              "type": "string"
+            },
+            "time": {
+              "type": "number",
+              "description": "deal time"
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "marketDealsExample",
+          "description": "Market deals example with lastId = 120",
+          "params": [
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "limit",
+              "value": 4
+            },
+            {
+              "name": "lastId",
+              "value": 120
+            }
+          ],
+          "result": {
+            "name": "marketPriceExampleResult",
+            "value": [
+              {
+                "price": "8000",
+                "id": 124,
+                "type": "sell",
+                "amount": "0.01",
+                "time": 1602632410.913296
+              },
+              {
+                "price": "8000",
+                "id": 123,
+                "type": "sell",
+                "amount": "0.01",
+                "time": 1602632410.752914
+              },
+              {
+                "price": "8000",
+                "id": 122,
+                "type": "sell",
+                "amount": "0.01",
+                "time": 1602632410.593215
+              },
+              {
+                "price": "8000",
+                "id": 121,
+                "type": "sell",
+                "amount": "0.01",
+                "time": 1602632410.437897
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "market.user_deals",
+      "description": "Returns user's deal history (transactions).",
+      "params": [
+        {
+          "name": "userId",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "market",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "description": "market name"
+          }
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "userDealHistory",
+        "description": "user deals history",
+        "schema": {
+          "$ref": "#/components/schemas/UserDeals"
+        }
+      },
+      "examples": [
+        {
+          "name": "userDealsExample",
+          "description": "User deals example with",
+          "params": [
+            {
+              "name": "userId",
+              "value": 1
+            },
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "offset",
+              "value": 0
+            },
+            {
+              "name": "limit",
+              "value": 2
+            }
+          ],
+          "result": {
+            "name": "userDealsExampleResult",
+            "value": {
+              "limit": 2,
+              "offset": 0,
+              "records": [
+                {
+                  "role": 2,
+                  "time": 1602705889.309346,
+                  "id": 127,
+                  "user": 1,
+                  "side": 2,
+                  "price": "10000",
+                  "amount": "0.1",
+                  "deal": "1000",
+                  "deal_order_id": 40,
+                  "fee": "0.0002",
+                  "market": "BTCUSD"
+                },
+                {
+                  "role": 1,
+                  "time": 1602705889.309346,
+                  "id": 127,
+                  "user": 1,
+                  "side": 1,
+                  "price": "10000",
+                  "amount": "0.1",
+                  "deal": "1000",
+                  "deal_order_id": 174,
+                  "fee": "1",
+                  "market": "BTCUSD"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "market.kline",
+      "description": "Shows kline of the market with time interval",
+      "params": [
+        {
+          "name": "market",
+          "description": "Market name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "start",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "description": "start time filter timestamp",
+            "minimum": 0
+          }
+        },
+        {
+          "name": "end",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "description": "end time filter timestamp",
+            "minimum": 0
+          }
+        },
+        {
+          "name": "interval",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "description": "time(in seconds) which klines will occur. Must be multiple of either minutes(60), hours(3600), days(86400), week(86400*7) or month(86400*30). Does not work with residual times like 1 hour 1 minute(3660) or 1 day 2 hours(93600) etc...",
+            "multipleOf": 60
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "marketKlineResult",
+        "description": "klines of interval",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Kline"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "marketKlineExample",
+          "description": "Daily kline example.",
+          "params": [
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "startTime",
+              "value": 1
+            },
+            {
+              "name": "endTime",
+              "value": 1602707173
+            },
+            {
+              "name": "interval",
+              "value": 86400
+            }
+          ],
+          "result": {
+            "name": "marketKlineExampleResult",
+            "value": [
+              [
+                1602460800,
+                "8000",
+                "8000",
+                "8000",
+                "8000",
+                "1",
+                "8000",
+                "BTCUSD"
+              ],
+              [
+                1602547200,
+                "1000",
+                "8000",
+                "9999",
+                "1",
+                "9.165",
+                "64319.5",
+                "BTCUSD"
+              ],
+              [
+                1602633600,
+                "10000",
+                "10000",
+                "10000",
+                "10000",
+                "2.1",
+                "21000",
+                "BTCUSD"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "market.status",
+      "description": "Shows overal market status in given period",
+      "params": [
+        {
+          "name": "market",
+          "description": "Market name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "period",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "description": "cycle period in seconds, e.g. 86400 for last 24 hours"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "marketStatusResult",
+        "description": "market status of given period",
+        "schema": {
+          "$ref": "#/components/schemas/MarketStatusPeriodic"
+        }
+      },
+      "examples": [
+        {
+          "name": "marketStatusExample",
+          "description": "Market status in last 2 days example.",
+          "params": [
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            },
+            {
+              "name": "period",
+              "value": 172800
+            }
+          ],
+          "result": {
+            "name": "marketStatusExampleResult",
+            "value": {
+              "period": 172800,
+              "last": "10000",
+              "high": "10000",
+              "close": "10000",
+              "open": "1000",
+              "low": "1",
+              "volume": "11.265",
+              "deal": "85319.5"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "market.status_today",
+      "description": "Shows today's overal market status",
+      "params": [
+        {
+          "name": "market",
+          "description": "Market name",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 1,
+          "message": "invalid argument"
+        }
+      ],
+      "result": {
+        "name": "tmarketStatusTodayResult",
+        "description": "market status of today",
+        "schema": {
+          "$ref": "#/components/schemas/MarketStatusRaw"
+        }
+      },
+      "examples": [
+        {
+          "name": "marketStatusTodayExample",
+          "description": "Market status in today example.",
+          "params": [
+            {
+              "name": "market",
+              "value": "BTCUSD"
+            }
+          ],
+          "result": {
+            "name": "marketStatusTodayExampleResult",
+            "value": {
+              "high": "10000",
+              "open": "10000",
+              "last": "10000",
+              "low": "10000",
+              "volume": "3.39",
+              "deal": "31320"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "AssetResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "prec": {
+            "type": "integer"
+          }
+        }
+      },
+      "AssetSummary": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "available_count": {
+            "type": "integer"
+          },
+          "total_balance": {
+            "type": "string"
+          },
+          "freeze_count": {
+            "type": "integer"
+          },
+          "available_balance": {
+            "type": "string"
+          },
+          "freeze_balance": {
+            "type": "string"
+          }
+        }
+      },
+      "Market": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "money_prec": {
+            "type": "integer"
+          },
+          "stock": {
+            "type": "string"
+          },
+          "money": {
+            "type": "string"
+          },
+          "fee_prec": {
+            "type": "integer"
+          },
+          "stock_prec": {
+            "type": "integer"
+          },
+          "min_amount": {
+            "type": "string"
+          }
+        }
+      },
+      "MarketSummary": {
+        "type": "object",
+        "properties": {
+          "bid_amount": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "ask_count": {
+            "type": "integer"
+          },
+          "bid_count": {
+            "type": "integer"
+          },
+          "ask_amount": {
+            "type": "string"
+          }
+        }
+      },
+      "UserBalance": {
+        "type": "object",
+        "patternProperties": {
+          "*.": {
+            "type": "object",
+            "properties": {
+              "available": {
+                "type": "string"
+              },
+              "freeze": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "BalanceHistory": {
+        "type": "object",
+        "properties": {
+          "asset": {
+            "type": "string"
+          },
+          "time": {
+            "type": "number"
+          },
+          "business": {
+            "type": "string"
+          },
+          "change": {
+            "type": "string"
+          },
+          "detail": {
+            "required": [
+              "id"
+            ],
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "indicates businessId",
+                "type": "integer"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "balance": {
+          "type": "string"
+        }
+      },
+      "Side": {
+        "type": "integer",
+        "enum": [
+          1,
+          2
+        ],
+        "description": "1: sell(ask), or 2: buy(bid)"
+      },
+      "OrderType": {
+        "type": "integer",
+        "enum": [
+          1,
+          2
+        ],
+        "description": "1: limit order, or 2: market order"
+      },
+      "OrderDetailsRaw": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "side": {
+            "$ref": "#/components/schemas/Side"
+          },
+          "deal_money": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "market": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/OrderType"
+          },
+          "user": {
+            "type": "integer",
+            "description": "userId"
+          },
+          "maker_fee": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "string"
+          },
+          "left": {
+            "type": "string"
+          },
+          "taker_fee": {
+            "type": "string"
+          },
+          "deal_fee": {
+            "type": "string"
+          },
+          "deal_stock": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderDetails": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OrderDetailsRaw"
+          },
+          {
+            "properties": {
+              "mtime": {
+                "type": "number",
+                "description": "modified at"
+              },
+              "ctime": {
+                "type": "number",
+                "description": "created at"
+              }
+            }
+          }
+        ]
+      },
+      "FinishedOrderDetails": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OrderDetailsRaw"
+          },
+          {
+            "properties": {
+              "ftime": {
+                "type": "number",
+                "description": "finalized (completed) at"
+              },
+              "ctime": {
+                "type": "number",
+                "description": "created at"
+              }
+            }
+          }
+        ]
+      },
+      "DealDetails": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "description": "1：Maker, 2: Taker"
+          },
+          "time": {
+            "type": "number",
+            "description": "deal time"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Deal ID"
+          },
+          "user": {
+            "type": "integer",
+            "description": "User ID"
+          },
+          "price": {
+            "type": "string",
+            "description": "price on order"
+          },
+          "amount": {
+            "type": "string",
+            "description": "amount (in stock)"
+          },
+          "deal": {
+            "type": "string",
+            "description": "deal amount (in security)"
+          },
+          "deal_order_id": {
+            "type": "integer",
+            "description": "Counterpart order ID"
+          },
+          "fee": {
+            "type": "string",
+            "description": "deal fee"
+          }
+        }
+      },
+      "UserDeals": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DealDetails"
+          },
+          {
+            "properties": {
+              "market": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "Kline": {
+        "type": "array",
+        "items": [
+          {
+            "description": "time",
+            "type": "integer"
+          },
+          {
+            "description": "open price",
+            "type": "string"
+          },
+          {
+            "description": "close price",
+            "type": "string"
+          },
+          {
+            "description": "highest price",
+            "type": "string"
+          },
+          {
+            "description": "lowest price",
+            "type": "string"
+          },
+          {
+            "description": "volume",
+            "type": "string"
+          },
+          {
+            "description": "amount",
+            "type": "string"
+          },
+          {
+            "description": "market name",
+            "type": "string"
+          }
+        ]
+      },
+      "MarketStatusRaw": {
+        "type": "object",
+        "properties": {
+          "last": {
+            "type": "string",
+            "description": "last price on the market (not periodic)"
+          },
+          "high": {
+            "type": "string",
+            "description": "highest price in period"
+          },
+          "open": {
+            "type": "string",
+            "description": "openning price in period"
+          },
+          "low": {
+            "type": "string",
+            "description": "lowest price in period"
+          },
+          "volume": {
+            "type": "string",
+            "description": "volume in period"
+          },
+          "deal": {
+            "type": "string",
+            "description": "deal amount in period"
+          }
+        }
+      },
+      "MarketStatusPeriodic": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MarketStatusRaw"
+          },
+          {
+            "properties": {
+              "period": {
+                "type": "integer",
+                "description": "cycle period"
+              },
+              "close": {
+                "type": "string",
+                "description": "close price in period"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
