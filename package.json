@@ -1,0 +1,33 @@
+{
+  "name": "viabtc-openrpc",
+  "version": "1.0.0",
+  "description": "viabtc json openrpc document",
+  "dependencies": {},
+  "devDependencies": {
+    "@open-rpc/generator": "^1.18.8"
+  },
+  "scripts": {
+    "conf:init": "open-rpc-generator init",
+    "docs:generate": "open-rpc-generator generate -d ./viabtc-openrpc.json -o ./ -t docs -l gatsby",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceyonur/viabtc-openrpc.git"
+  },
+  "keywords": [
+    "viabtc",
+    "btc",
+    "crypto",
+    "openrpc",
+    "rpc",
+    "json",
+    "documentation"
+  ],
+  "author": "Ceyhun Onur",
+  "license": "MIT License",
+  "bugs": {
+    "url": "https://github.com/ceyonur/viabtc-openrpc/issues"
+  },
+  "homepage": "https://github.com/ceyonur/viabtc-openrpc#readme"
+}

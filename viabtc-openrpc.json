@@ -2523,7 +2523,7 @@
         }
       ],
       "result": {
-        "name": "tmarketStatusTodayResult",
+        "name": "marketStatusTodayResult",
         "description": "market status of today",
         "schema": {
           "$ref": "#/components/schemas/MarketStatusRaw"
